@@ -1,3 +1,14 @@
+// Copyright 2010 Jeff Plaisance
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License. You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software distributed under the License is
+// distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and limitations under the License.
+
 package com.jeffplaisance.jeffdiff
 
 import org.jboss.netty.buffer.ChannelBuffers
@@ -11,15 +22,12 @@ import java.io.{File, RandomAccessFile}
 object BenchmarkJeffZip {
 
     def main(args: Array[String]) {
+        testNative
+        test
         val temp = new File(args(0))
-        
-        for (file <- temp.listFiles.filter(x => x.length < Integer.MAX_VALUE && !x.isDirectory)) {
+        for (file <- temp.listFiles.filter(x => x.length < 1024*1024*128 && !x.isDirectory)) {
             println(file.getAbsolutePath)
             println("--------------------------------------------------------")
-            //Console.readLine
-    //        testNative
-    //        test
-            //Console.readLine
             println("native")
             native(file.getAbsolutePath)
             println("jvm")
